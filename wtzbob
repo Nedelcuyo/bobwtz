@@ -1,3 +1,38 @@
+getgenv().Settings = {
+    AutoBuyDice = false,
+    UiEnabled = false,
+    Roll = {
+        Enable = false,
+        Invisible = false,
+    },
+    Dice = {
+        ["Lucky Dice"] = {Craft = false, Use = false, Only_Use_If_Not_Active = false, Roll_On_Boost = false},
+        ["Lucky Dice II"] = {Craft = false, Use = false, Only_Use_If_Not_Active = false, Roll_On_Boost = false},
+        ["Lucky Dice III"] = {Craft = false, Use = false, Only_Use_If_Not_Active = false, Roll_On_Boost = false},
+        ["Mega Lucky Dice"] = {Craft = false, Use = false, Only_Use_If_Not_Active = false, Roll_On_Boost = false},
+        ["Mega Lucky Dice II"] = {Craft = false, Use = false, Only_Use_If_Not_Active = false, Roll_On_Boost = false},
+    },
+    Webhook = {
+        DiscordID = "",
+        Link = "",
+        ShowRobloxUsername = false,
+    },
+    Upgrades = {
+        EggLuck = false,
+        HatchSpeed = false,
+        BonusLuck = false,
+        ExtraEgg = false,
+        HugeLuck = false,
+    },
+    Misc = {
+        FpsBoost = false,
+        AntiAfk = false,
+    },
+    AutoMail = {
+        Enabled = false, 
+        MailToUser = "", 
+    }
+}
 --[[ Wait for game to load ]]--
 repeat task.wait() until game:IsLoaded() 
 repeat task.wait() until game:GetService("Players").LocalPlayer
