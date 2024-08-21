@@ -1,38 +1,3 @@
-getgenv().Settings = {
-    AutoBuyDice = false,
-    UiEnabled = false,
-    Roll = {
-        Enable = false,
-        Invisible = false,
-    },
-    Dice = {
-        ["Lucky Dice"] = {Craft = false, Use = false, Only_Use_If_Not_Active = false, Roll_On_Boost = false},
-        ["Lucky Dice II"] = {Craft = false, Use = false, Only_Use_If_Not_Active = false, Roll_On_Boost = false},
-        ["Lucky Dice III"] = {Craft = false, Use = false, Only_Use_If_Not_Active = false, Roll_On_Boost = false},
-        ["Mega Lucky Dice"] = {Craft = false, Use = false, Only_Use_If_Not_Active = false, Roll_On_Boost = false},
-        ["Mega Lucky Dice II"] = {Craft = false, Use = false, Only_Use_If_Not_Active = false, Roll_On_Boost = false},
-    },
-    Webhook = {
-        DiscordID = "",
-        Link = "",
-        ShowRobloxUsername = false,
-    },
-    Upgrades = {
-        EggLuck = false,
-        HatchSpeed = false,
-        BonusLuck = false,
-        ExtraEgg = false,
-        HugeLuck = false,
-    },
-    Misc = {
-        FpsBoost = false,
-        AntiAfk = false,
-    },
-    AutoMail = {
-        Enabled = false, 
-        MailToUser = "", 
-    }
-}
 --[[ Wait for game to load ]]--
 repeat task.wait() until game:IsLoaded() 
 repeat task.wait() until game:GetService("Players").LocalPlayer
@@ -376,7 +341,7 @@ SSOL_UI["a"]["TextColor3"] = Color3.fromRGB(0, 0, 0);
 SSOL_UI["a"]["AnchorPoint"] = Vector2.new(0.5, 0.5);
 SSOL_UI["a"]["Size"] = UDim2.new(1, 0, 1, 0);
 SSOL_UI["a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0);
-SSOL_UI["a"]["Text"] = "Mastery Level: bobisgay";
+SSOL_UI["a"]["Text"] = "Mastery Level: 99";
 SSOL_UI["a"]["Font"] = Enum.Font.SourceSansBold;
 SSOL_UI["a"]["BackgroundTransparency"] = 1;
 SSOL_UI["a"]["Position"] = UDim2.new(0.5, 0, 0.5, 0);
@@ -639,39 +604,18 @@ RunService.RenderStepped:Connect(function()
         end
     end
     if diceSettings.Craft then
-function GetKey(keyName)
-    for i, v in pairs(require(game.ReplicatedStorage.Library.Client.Save).Get().Inventory.Misc) do
-        if v.id == keyName then
-            return v._am or 0
+        local diceII = GetKey("Lucky Dice II")
+        local diceIII = GetKey("Lucky Dice III")
+        if diceII >= 30 or diceIII >= 2 then
+            task.wait(20)
+            local success = Network:WaitForChild("LuckyDice_Craft"):InvokeServer("Mega Lucky Dice", 1)
+            if not success and diceIII >= 2 then
+                Network:WaitForChild("LuckyDice_Craft"):InvokeServer("Lucky Dice III", 2)
+                task.wait(1)
+                Network:WaitForChild("LuckyDice_Craft"):InvokeServer("Mega Lucky Dice", 1)
+            end
         end
     end
-    return 0
-end
-
-if GetKey("Lucky Dice II") >= 30 then
-    wait(2)
-
-    local argsMegaLucky = {
-        [1] = "Mega Lucky Dice",
-        [2] = 1
-    }
-
-    for i = 1, 15 do
-        game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("LuckyDice_Craft"):InvokeServer(unpack(argsMegaLucky))
-    end
-
-    if GetKey("Lucky Dice II") <= 29 then
-else
-        local argsLuckyDiceIII = {
-            [1] = "Lucky Dice III",
-            [2] = 1
-        }
-
-        for i = 1, 15 do
-            game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("LuckyDice_Craft"):InvokeServer(unpack(argsLuckyDiceIII))
-        end
-    end
-end
 
     local diceSettings4 = Settings.Dice["Mega Lucky Dice II"]
     local function consumeMegaLuckyDice()
@@ -700,13 +644,3 @@ end
     end
     task.wait()
 end)
-while true do
-    local args = {
-        [1] = "Mega Lucky Dice II",
-        [2] = 1
-    }
-
-    game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("LuckyDice_ConsumeMega"):InvokeServer(unpack(args))
-    
-    wait(5)
-end
